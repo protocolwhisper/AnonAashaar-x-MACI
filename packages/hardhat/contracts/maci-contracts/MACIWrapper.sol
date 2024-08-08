@@ -8,6 +8,7 @@ import { IMessageProcessorFactory } from "maci-contracts/contracts/interfaces/IM
 import { ITallyFactory } from "maci-contracts/contracts/interfaces/ITallyFactory.sol";
 import { SignUpGatekeeper } from "maci-contracts/contracts/gatekeepers/SignUpGatekeeper.sol";
 import { InitialVoiceCreditProxy } from "maci-contracts/contracts/initialVoiceCreditProxy/InitialVoiceCreditProxy.sol";
+import "./IAnonAadhaar.sol";
 
 /// @title MACI - Minimum Anti-Collusion Infrastructure Version 1
 /// @notice A contract which allows users to sign up, and deploy new polls
@@ -25,6 +26,15 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 		string tallyJsonCID;
 	}
 
+	struct AnonProof{
+		uint nullifierSeed;
+        uint nullifier;
+        uint timestamp;
+        uint signal;
+        uint[4] revealArray;
+        uint[8] groth16Proof;
+	}
+
 	mapping(uint256 => PollData) internal _polls;
 
 	TreeDepths public treeDepths;
@@ -32,7 +42,10 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 	address public verifier;
 	address public vkRegistry;
 
+	IAnonAadhaar public AnonAadhar;
+
 	mapping(address => uint256) public pollIds;
+	mapping(address => bool) public anonverify;
 
 	event PollCreated(
 		uint256 indexed pollId,
@@ -52,9 +65,12 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 
 	error PubKeyAlreadyRegistered();
 	error PollAddressDoesNotExist(address _poll);
+	error ProofisFalse();
+	//error AnonNotVerified;
 
 	constructor(
 		IPollFactory _pollFactory,
+		address _anonaadhar,
 		IMessageProcessorFactory _messageProcessorFactory,
 		ITallyFactory _tallyFactory,
 		SignUpGatekeeper _signUpGatekeeper,
@@ -71,7 +87,9 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 			_stateTreeDepth,
 			_emptyBallotRoots
 		)
-	{}
+	{
+		AnonAadhar = IAnonAadhaar(_anonaadhar);
+	}
 
 	function setConfig(
 		TreeDepths memory _treeDepths,
@@ -97,14 +115,21 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 	/// @param _initialVoiceCreditProxyData Data to pass to the
 	///     InitialVoiceCreditProxy, which allows it to determine how many voice
 	///     credits this user should have.
-	function signUp(
+	
+	function signUp (
 		PubKey memory _pubKey,
 		bytes memory _signUpGatekeeperData,
 		bytes memory _initialVoiceCreditProxyData
+		//AnonProof memory _anonproof
+
+
 	) public override {
 		// check if the pubkey is already registered
 		if (isPublicKeyRegistered[_pubKey.x][_pubKey.y])
 			revert PubKeyAlreadyRegistered();
+		require(anonverify[msg.sender] == true);
+		//if (AnonAadhar.verifyAnonAadhaarProof(_anonproof.nullifierSeed, _anonproof.nullifier, _anonproof.timestamp, _anonproof.signal, _anonproof.revealArray, _anonproof.groth16Proof))
+			//revert ProofisFalse();
 
 		super.signUp(
 			_pubKey,
@@ -114,6 +139,20 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 
 		isPublicKeyRegistered[_pubKey.x][_pubKey.y] = true;
 	}
+
+	function verify_anon(AnonProof memory _anonproof) public {
+        if (!AnonAadhar.verifyAnonAadhaarProof(
+            _anonproof.nullifierSeed,
+            _anonproof.nullifier,
+            _anonproof.timestamp,
+            _anonproof.signal,
+            _anonproof.revealArray,
+            _anonproof.groth16Proof
+        )) {
+            revert ProofisFalse();
+        }
+        anonverify[msg.sender] = true;
+    }
 
 	function createPoll(
 		string calldata _name,
@@ -218,4 +257,5 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 		if (_pollId >= nextPollId) revert PollDoesNotExist(_pollId);
 		return _polls[_pollId];
 	}
+
 }

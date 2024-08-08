@@ -15,6 +15,7 @@ export default function RegisterButton() {
 
     try {
       await writeAsync({ args: [keypair.pubKey.asContractParam() as { x: bigint; y: bigint }, "0x", "0x"] });
+      console.log(`params for sign up: ${JSON.stringify(keypair.pubKey.asContractParam() as { x: bigint; y: bigint } )}`);
     } catch (err) {
       console.log(err);
     }

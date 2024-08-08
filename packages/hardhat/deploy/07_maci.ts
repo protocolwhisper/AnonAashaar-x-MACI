@@ -22,6 +22,7 @@ const deployContracts: DeployFunction = async function (hre: HardhatRuntimeEnvir
     from: deployer,
     args: [
       await pollFactory.getAddress(),
+      "0x6bE8Cec7a06BA19c39ef328e8c8940cEfeF7E281",
       await messageProcessorFactory.getAddress(),
       await tallyFactory.getAddress(),
       await gatekeeper.getAddress(),

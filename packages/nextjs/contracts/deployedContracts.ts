@@ -5,9 +5,9 @@
 import { GenericContractsDeclaration } from "../utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  31337: {
+  11155111: {
     ConstantInitialVoiceCreditProxy: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0x9d105FBA2C464C5b98a86A7377992f7A3e171FAE",
       abi: [
         {
           inputs: [
@@ -45,10 +45,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 1,
+      deploymentBlockNumber: 6462608,
     },
     FreeForAllGatekeeper: {
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      address: "0x514B0c66b5398F45BdBDCcc6C0FAfeD82A5d33dd",
       abi: [
         {
           inputs: [],
@@ -100,16 +100,21 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 3,
+      deploymentBlockNumber: 6462609,
     },
     MACIWrapper: {
-      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      address: "0xC45a3EEa14df926d2d1188bBc19Ed46c48332378",
       abi: [
         {
           inputs: [
             {
               internalType: "contract IPollFactory",
               name: "_pollFactory",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_anonaadhar",
               type: "address",
             },
             {
@@ -218,6 +223,11 @@ const deployedContracts = {
         {
           inputs: [],
           name: "PoseidonHashLibrariesNotLinked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ProofisFalse",
           type: "error",
         },
         {
@@ -430,6 +440,19 @@ const deployedContracts = {
           ],
           name: "SignUp",
           type: "event",
+        },
+        {
+          inputs: [],
+          name: "AnonAadhar",
+          outputs: [
+            {
+              internalType: "contract IAnonAadhaar",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
         },
         {
           inputs: [],
@@ -1380,6 +1403,78 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "x",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "y",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct DomainObjs.PubKey",
+              name: "_pubKey",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes",
+              name: "_signUpGatekeeperData",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes",
+              name: "_initialVoiceCreditProxyData",
+              type: "bytes",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nullifierSeed",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nullifier",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "signal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[4]",
+                  name: "revealArray",
+                  type: "uint256[4]",
+                },
+                {
+                  internalType: "uint256[8]",
+                  name: "groth16Proof",
+                  type: "uint256[8]",
+                },
+              ],
+              internalType: "struct MACIWrapper.AnonProof",
+              name: "_anonproof",
+              type: "tuple",
+            },
+          ],
+          name: "signUp",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
           inputs: [],
           name: "signUpGatekeeper",
           outputs: [
@@ -1532,10 +1627,10 @@ const deployedContracts = {
         stateTreeDepth: "maci-contracts/contracts/MACI.sol",
         tallyFactory: "maci-contracts/contracts/MACI.sol",
       },
-      deploymentBlockNumber: 21,
+      deploymentBlockNumber: 6462627,
     },
     MessageProcessorFactory: {
-      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      address: "0x5A1cE4bA8F1Aeb7f1dF4F633F176CcEF9f8E423a",
       abi: [
         {
           inputs: [],
@@ -1590,10 +1685,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 17,
+      deploymentBlockNumber: 6462616,
     },
     PollFactory: {
-      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      address: "0x0Fe3200B333df1E656822d3219e0A59662AAfe72",
       abi: [
         {
           inputs: [],
@@ -1709,10 +1804,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 15,
+      deploymentBlockNumber: 6462615,
     },
     PoseidonT3: {
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      address: "0xE1aaC950A6C8d6f8d166Cd9e2AD8062a9E2C4889",
       abi: [
         {
           inputs: [
@@ -1734,10 +1829,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 7,
+      deploymentBlockNumber: 6462611,
     },
     PoseidonT4: {
-      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      address: "0xDc5F639eb97dC09EFFf2112C5b4218984905d11A",
       abi: [
         {
           inputs: [
@@ -1759,10 +1854,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 9,
+      deploymentBlockNumber: 6462612,
     },
     PoseidonT5: {
-      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      address: "0xec6913b437D8052918ab693b032E467fc6cE2d28",
       abi: [
         {
           inputs: [
@@ -1784,10 +1879,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 11,
+      deploymentBlockNumber: 6462613,
     },
     PoseidonT6: {
-      address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      address: "0xcF3Be78Ff3477926f11155e49889cBeBE7bA42D6",
       abi: [
         {
           inputs: [
@@ -1809,10 +1904,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 13,
+      deploymentBlockNumber: 6462614,
     },
     TallyFactory: {
-      address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      address: "0x5AAC668e55f429cFe8021671a45cf9cFd1C71b5B",
       abi: [
         {
           inputs: [],
@@ -1872,10 +1967,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 19,
+      deploymentBlockNumber: 6462617,
     },
     Verifier: {
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      address: "0x3Dd2a5Ad0bB3553F558d170f182C2afe9B685C45",
       abi: [
         {
           inputs: [],
@@ -2032,10 +2127,10 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 5,
+      deploymentBlockNumber: 6462610,
     },
     VkRegistry: {
-      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      address: "0xBb5c943df4f99F44d8fCD3234fC2daB1B7090C62",
       abi: [
         {
           inputs: [],
@@ -3295,7 +3390,7 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      deploymentBlockNumber: 24,
+      deploymentBlockNumber: 6462629,
     },
   },
 } as const;
